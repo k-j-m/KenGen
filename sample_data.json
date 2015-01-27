@@ -1,0 +1,28 @@
+{
+    "x":10,
+    "y":{
+	"@type":"SomeClass3",
+	"name":"Kermit",
+	"age":8
+    },
+    "z":[
+	{
+	    "@type":"SomeClass2",
+	    "name":"fonz"
+	},	
+	{
+	    "@type":"SomeClass2",
+	    "name":"groucho"
+	},
+	{
+	    "@type":"SomeClass3",
+	    "name":"donald",
+	    "age":21
+	}
+    ],
+    "a":{
+	"house":"boat",
+	"blue":"sky"
+    }
+}
+	

@@ -1,0 +1,51 @@
+<Model>
+
+  <Class name="SomeClass2" extends="AbstractClass">
+    <Attribute name="name">
+      <TypeRef type="string"/>
+    </Attribute>
+  </Class>
+
+  <Class name="SomeClass3" extends="AbstractClass">
+    <Attribute name="name">
+      <TypeRef type="string"/>
+    </Attribute>
+    <Attribute name="age">
+      <TypeRef type="int"/>
+    </Attribute>
+  </Class>
+  
+  <Class name="AbstractClass" isabstract="True"/>
+
+  <Class name="TopClass">
+    <Attribute name="x">
+      <TypeRef type="int"/>
+    </Attribute>
+    <Attribute name="y">
+      <TypeRef type="AbstractClass"/>
+    </Attribute>
+    <Attribute name="z">
+      <TypeRef type="List">
+	<Item>
+	  <TypeRef type="AbstractClass"/>
+	</Item>
+      </TypeRef>
+    </Attribute>
+    <Attribute name="a">
+      <TypeRef type="Map">
+	<!-- Had to add the nested elements to handle cases such as
+	Map<String,Map<String,Map<String,String>>>
+	This complicates things a bit, but is an important detail
+	to untangle.
+	-->
+	<Key>
+	  <TypeRef type="string"/>
+	</Key>
+	<Value>
+	  <TypeRef type="string"/>
+	</Value>
+      </TypeRef>
+    </Attribute>
+  </Class>
+
+</Model>

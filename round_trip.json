@@ -1,0 +1,1 @@
+{"a": {"blue": "sky", "house": "boat"}, "x": 10, "z": [{"name": "fonz", "@type": "SomeClass2"}, {"name": "groucho", "@type": "SomeClass2"}, {"age": 21, "name": "donald", "@type": "SomeClass3"}], "y": {"age": 8, "name": "Kermit", "@type": "SomeClass3"}}
