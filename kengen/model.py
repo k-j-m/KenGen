@@ -1,11 +1,4 @@
 
-# This is NASTY! This is meant to be language neutral in here
-# I guess I need to add some language specific (but not library
-# specific) utility modules.
-
-# A list of what builtin data types we support.
-python_primitives = ['float','int','string','boolean']
-python_structures = ['List', 'Map']
 
 class ClassElement(object):
     """
@@ -128,6 +121,15 @@ def class_is_resolved(cls_elem, custom_types):
         return type_is_resolved(type_name, custom_types)
     
     return all(map(check_type, precedents))
+
+
+# This is NASTY! This is meant to be language neutral in here
+# I guess I need to add some language specific (but not library
+# specific) utility modules.
+
+# A list of what builtin data types we support.
+python_primitives = ['float','int','string','boolean']
+python_structures = ['List', 'Map']
     
 def type_is_resolved(type_name, custom_types):
     """

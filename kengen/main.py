@@ -1,9 +1,9 @@
 import kengen.parsers.xml_format1
-import kengen.codegen.pyxon
+import kengen.codegen.jackson
 
 def main(model_file, target_dir):
     parser = kengen.parsers.xml_format1
-    writer = kengen.codegen.pyxon
+    writer = kengen.codegen.jackson
 
     writer.generate_source(parser.load_model(model_file),
                            target_dir)
