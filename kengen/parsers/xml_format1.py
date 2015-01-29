@@ -1,12 +1,13 @@
 import xml.etree.ElementTree as ET
 
-from kengen.model import ClassElement, TypeRef
+from kengen.model import ClassElement, TypeRef, Model
 
 def load_model(model_file):
     tree = ET.parse(model_file)
     model = tree.getroot()
+    package = model.attrib.get('package','default')
     classes = parse_model(model)
-    return classes
+    return Model(classes, package)
 
 def str_to_bool(boolstring):
     """
@@ -75,6 +76,6 @@ def parse_typeref(elem):
     # as well? I think it ought to, but how do we turn that into code?
     # Also, how to we handle the parameter ordering?
     # MyClass<p1,p2>: MyClass<String,Int> <==> MyClass<Int,String>
-    params = dict([(e.tag,parse_typeref(e[0])) for e in elem])
+    params = [(e.tag,parse_typeref(e[0])) for e in elem]
     return TypeRef(type_, params)
 

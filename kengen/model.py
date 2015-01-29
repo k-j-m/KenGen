@@ -1,3 +1,7 @@
+class Model(object):
+    def __init__(self, classes, package):
+        self.classes = classes
+        self.package = package
 
 
 class ClassElement(object):
@@ -37,7 +41,8 @@ class ClassElement(object):
         for type_ref in self.attrs.values():
             precedents.extend(type_ref.get_precedents())
         return precedents
-        
+
+    
 class TypeRef(object):
     """
     This class is the nuts-and-bolts of our type-system.
@@ -47,7 +52,7 @@ class TypeRef(object):
 
     In Java-speak: List<Integer> or Map<String,Double>
     """
-    def __init__(self, type_, type_params={}):
+    def __init__(self, type_, type_params=[]):
         """
         Value constructor.
         All of the info needs to be parsed from the data model by code
@@ -63,8 +68,9 @@ class TypeRef(object):
         type itself and the types of any nested attributes).
         """
         precedents = [self.type_]
-        for tp in self.type_params.values():
-            precedents.extend(tp.get_precedents())
+        for tp in self.type_params:
+            print tp[1]
+            precedents.extend(tp[1].get_precedents())
 
         return precedents
         

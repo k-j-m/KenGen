@@ -8,17 +8,25 @@ import os
 from kengen.model import order_classes
 from kengen.model import python_primitives, python_structures
 
-def generate_source(classes, target_dir, module_path=('default',)):
+def generate_source(model, target_dir, module_path=('default',)):
     assert os.path.isdir(target_dir), "Make sure that directory exists: %s" % target_dir
 
+    classes = model.classes
+    module_path = model.package.split('.')
     fname = module_path[-1] + '.py'
-    sub_dirs = module_path[:-1]
-    target_dir2 = os.path.join(target_dir, *sub_dirs)
-    
-    if not os.path.exists(target_dir2):
-        os.makedirs(target_dir2)
 
-    with open(os.path.join(target_dir2,fname),'w') as src_file:
+    cur_dir = target_dir
+    sub_dirs = module_path[:-1]
+    for sub_dir in sub_dirs:
+        cur_dir = os.path.join(cur_dir, sub_dir)
+        if not os.path.exists(cur_dir):
+            os.mkdir(cur_dir)
+
+        init_file = os.path.join(cur_dir,'__init__.py')
+        if not os.path.exists(init_file):
+            open(init_file,'a') # touch file
+            
+    with open(os.path.join(cur_dir,fname),'w') as src_file:
         src_string = get_source_string(classes)
         src_file.write(src_string)
 
@@ -137,14 +145,15 @@ def map_marshal_funs(type_ref):
     """
     assert type_ref.type_ == 'Map'
 
-    key_type_ref = type_ref.type_params['Key']
+    type_params_dict = dict(type_ref.type_params) 
+    key_type_ref = type_params_dict['Key']
     #key_marshal, key_unmarshal = type_ref_marshal_funs(key_type_ref)
     # SPECIAL TREATMENTFOR KEYS
     assert key_type_ref.type_ == 'string'
     key_marshal = 'identity'
     key_unmarshal = 'identity'
     
-    val_type_ref = type_ref.type_params['Value']
+    val_type_ref = type_params_dict['Value']
     val_marshal, val_unmarshal = type_ref_marshal_funs(val_type_ref)
 
     template = 'transform_map(%s, %s)'
@@ -159,8 +168,8 @@ def list_marshal_funs(type_ref):
     Returns the marshal functions for a list data type.
     """
     assert type_ref.type_ == 'List'
-
-    item_type_ref = type_ref.type_params['Item']
+    
+    item_type_ref = dict(type_ref.type_params)['Item']
     item_marshal, item_unmarshal = type_ref_marshal_funs(item_type_ref)
 
     template = 'transform_list(%s)'

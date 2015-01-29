@@ -1,5 +1,4 @@
-<Model>
-
+<Model package="some.package.declaration">
   <Class name="SomeClass2" extends="AbstractClass">
     <Attribute name="name">
       <TypeRef type="string"/>
